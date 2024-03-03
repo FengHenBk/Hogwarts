@@ -32,14 +32,15 @@ class HeroManagement:
         return False
 
     def create_hero(self, hero_name, hero_volume, hero_power):
+        if type(hero_volume) or hero_power != int:
+            return False
         if hero_volume <= 0 or hero_volume >= 100:
             return False
         if hero_power <= 0:
             return False
         if type(hero_name) != str:
             return False
-        if type(hero_volume) != int:
-            return False
+
         hero_info = {"name": hero_name, "volume": hero_volume, "power": hero_power}
         self.hero_list.append(hero_info)
         return True
