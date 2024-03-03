@@ -1,0 +1,30 @@
+create_hero:
+  hero_name:
+    success:
+      - "李白"
+    falied:
+      - 123
+      - 123.2
+
+
+  hero_volume:
+    success:
+      - 0
+      - 1
+      - 50
+      - 99
+      - 100
+    falied:
+      - "124"
+      - 213.2
+
+
+  hero_power:
+    success:
+      - 0
+      - 50
+    falied:
+      - "124"
+      - 213.2
+      - -1
+
