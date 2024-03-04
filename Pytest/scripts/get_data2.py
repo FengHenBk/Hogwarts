@@ -1,3 +1,4 @@
+import allure
 import yaml
 
 file_url = 'D:\code\pythonProject\pythonProject\Hogwarts\Pytest\\test_data\\test_hero_data.yaml'
@@ -76,4 +77,15 @@ def get_hero_volume_success_add():
 
 
 # print(get_hero_volume_success_add())
+
+def pictureIntoReport(file, title="系统截图"):
+    """
+    将操作写入测试报告
+    :desc:文件控件
+    :title: 描述
+    :return:
+    """
+    with open(file, mode='rb') as f:
+        files = f.read()
+    allure.attach(files, title, attachment_type=allure.attachment_type.PNG)
 

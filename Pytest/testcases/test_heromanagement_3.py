@@ -1,11 +1,16 @@
+import time
+
+import allure
+import pyautogui
 import pytest
 
+import get_data_1
 from HeroManagement import HeroManagement
 from get_data2 import get_hero_name_success, get_hero_volume_success, get_hero_power_success, get_hero_name_falied, \
-    get_hero_volume_falied, get_hero_power_falied, get_hero_volume_success_add
+    get_hero_volume_falied, get_hero_power_falied, get_hero_volume_success_add, pictureIntoReport
 
 
-class TestHeroManagement_2:
+class TestHeroManagement_3:
     def setup_class(self):
         self.manage = HeroManagement()
 
@@ -14,6 +19,7 @@ class TestHeroManagement_2:
     @pytest.mark.parametrize('name', get_hero_name_success())
     @pytest.mark.parametrize('volume', get_hero_volume_success())
     @pytest.mark.parametrize('power', get_hero_power_success())
+    @allure.title("hero_name：{name},volume:{volume},power:{power}")
     def test_add_hero_success(self, name, volume, power):
         print(f"hero: {name}, volume: {volume}, power: {power}")
         # 执行增加英雄方法前,列表应为空,获取当前列表长度
@@ -22,6 +28,9 @@ class TestHeroManagement_2:
         if self.manage.create_hero(name, volume, power):
             pre += 1
         # 断言:增加成功,self.manage.hero_list列表长度应+1;增加失败,self.manage.hero_list长度不变
+        path_filename = './pic/' + "\\" + time.strftime('%Y-%m-%d_%H_%M_%S.png')
+        pyautogui.screenshot(path_filename)
+        pictureIntoReport(path_filename, "系统截图")
         assert len(self.manage.hero_list) == pre
 
     # 无效等价类
@@ -40,6 +49,7 @@ class TestHeroManagement_2:
         assert len(self.manage.hero_list) == pre
 
     # 不改变测试数据,修改获取数据的方法,一下两个是重新获取测试数据后的测试案例执行
+    @allure.title("-----")
     @pytest.mark.parametrize('name', get_hero_name_success())
     @pytest.mark.parametrize('volume', get_hero_volume_success_add())
     @pytest.mark.parametrize('power', get_hero_power_success())
@@ -52,6 +62,7 @@ class TestHeroManagement_2:
             pre += 1
         # 断言:增加成功,self.manage.hero_list列表长度应+1;增加失败,self.manage.hero_list长度不变
         assert len(self.manage.hero_list) == pre
+        allure.dynamic.title(f"hero_name：{name},volume:{volume},power:{power}")
 
     @pytest.mark.parametrize('name', get_hero_name_falied())
     @pytest.mark.parametrize('volume', get_hero_volume_falied())
